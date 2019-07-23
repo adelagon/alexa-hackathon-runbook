@@ -164,7 +164,7 @@ class CrashHandler(AbstractRequestHandler):
     Use: 'crash' as an intent utterance for this RequestHandler.
     """
     def can_handle(self, handler_input):
-        return is_intent_name("AChuckFact")(handler_input)
+        return is_intent_name("Crash")(handler_input)
         
     def handle(self, handler_input):
         speech = "So you like Chuck Norris huh. Let me give you another one. "
