@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+    alexa-random-chuck-fact
+
+    Sample SAM Template for alexa-random-fact
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+    Function:
+        Timeout: 3
+
+
+Resources:
+    AlexaRandomFactPyFn:
+        Type: AWS::Serverless::Function
+        Properties:
+            CodeUri: src/
+            Handler: app.lambda_handler
+            Runtime: python3.6
+        Events:
+            AlexaSkillEvent:
+                Type: AlexaSkill
+Outputs:
+    AlexaRandomFactPyFn:
+      Description: "Random Chuck Norris Fact Alexa Python Function ARN"
+      Value: !GetAtt AlexaRandomFactPyFn.Arn
