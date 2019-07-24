@@ -12,7 +12,7 @@ Resources:
   AlexaRandomFactPyFn:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://ph-alexa-hackathon-team1/b79c04619532f9e12109a8430df25e65
+      CodeUri: s3://ph-alexa-hackathon-team1/c10005cb1569272d8b8cdfbaa1cf4fb7
       Handler: app.lambda_handler
       Runtime: python3.6
     Events:

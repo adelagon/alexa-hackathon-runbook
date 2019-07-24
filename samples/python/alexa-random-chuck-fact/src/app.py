@@ -202,6 +202,7 @@ sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(StopIntentHandler())
 sb.add_request_handler(AnotherFactHandler())
+sb.add_request_handler(CrashHandler())
 sb.add_request_handler(FallbackIntentHandler())
 
 # Registering the ExceptionHandlers
