@@ -182,7 +182,8 @@
 
 ## Resources
 
-* https://developer.amazon.com/en-US/alexa/alexa-skills-kit/learn
+* Alexa Skills Kit - https://developer.amazon.com/en-US/alexa/alexa-skills-kit/learn
+* Bult-in Intents List - https://developer.amazon.com/docs/custom-skills/implement-the-built-in-intents.html
 * ASK SDK for python docs - https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/
 * ASK SDK for node.js docs - https://ask-sdk-for-nodejs.readthedocs.io/en/latest/
 * ASK SDK for java docs - https://github.com/alexa/alexa-skills-kit-sdk-for-java
