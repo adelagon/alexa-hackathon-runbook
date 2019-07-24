@@ -16,42 +16,66 @@
   - Each team will be provided their own AWS Account to use.
   - We will be using the **[Cloud9](https://aws.amazon.com/cloud9/)** as our IDE and **[SAM (Serverless Application Model)](https://aws.amazon.com/serverless/sam/)** to provision and deploy our AWS resources.
   - We will be using **N. Virginia (us-east-1)** region for this hackathon. Always make sure that you are in this region when interacting with the AWS console, CLI, or SDK.
-  - Each team should be able program using any of these languages: Node.js, Java, Python, C#, or Go. The sample skills and scaffolding code provided are written in **Python** and **Node.js**.
+  - Each team should be able program using any of these languages: Node.js, Java, Python, C#, or Go. The sample skills and scaffolding code provided are written in **Python**.
 
   
 
-  ## Setting up your Environment
+  ## Hackathon Rules
 
-  - Once logged in to AWS console. Go to Cloud9 dashboard and create a new Environment with the following configuration. Make sure that you're in N.Virginia (us-east-1) region:
+  * The theme of this hackathon is "Building Productivity Alexa skills". This could be something like:
+  
+    * Meeting of the Minutes skill
+    * Meeting room booking skill
+    * A skill that voice back sales stats
+  
+  * While planning what skill to develop, make sure that you can deliver it within 3 hours.
+  
+  * Each team is allowed to use any other AWS services such as DynamoDB. This will give you extra points.
+  
+  * You can use any other third party API's. PROTIP: see if there's any interesting API's to play with in https://rapidapi.com/
+  
+  
+  
+## Setting up your Environment
+  
+- Once logged in to AWS console. Go to Cloud9 dashboard and create a new Environment with the following configuration. Make sure that you're in N.Virginia (us-east-1) region:
     - **Name:** Any
     - **Environment Type:** Create a new instance for environment (EC2)
     - **Instance type**: t2.micro (1 GiB RAM + 1 vCPU)
-    - **Platform:** Amazon Linux
+  - **Platform:** Amazon Linux
     - **Cost-saving setting**: 30 minutes
-    - **Network VPC:** will be provided
+  - **Network VPC:** will be provided
     - **Subnet:** will be provided
-  - Click **Create Environment** and wait for the Cloud9 instance to boot up.
+- Click **Create Environment** and wait for the Cloud9 instance to boot up.
   - In Cloud9 IDE Terminal window, clone the hackathon materials
-    - `$ git clone https://github.com/adelagon/alexa-hackathon-runbook.git`
+  - `$ git clone https://github.com/adelagon/alexa-hackathon-runbook.git`
   - We will be discussing how to build your own Alexa Skills on the section.
 
   
-
-  ## How to write your own Alexa Skills
-
-  - In Cloud9 IDE, go to python samples folder and open the **app.py** file that contains the alexa skill written in python.
-    - `$ cd alexa-hackathon-runbook/samples/python/alexa-random-chuck-fact/src`
-  - The provided example is a custom Alexa skill that give random Chuck Norris facts. At this point, we will spend some time to run through the well-documented code. This should give everyone an idea on how to write your own skill.
-
+  
+## Alexa Interaction Model
+  
+![](images/interaction_model.png)
+  
+![](images/interaction_model_slot.png)
   
 
-  ## How to Deploy the sample Alexa Skill
+  
+## How to write your own Alexa Skills
+  
+- In Cloud9 IDE, go to python samples folder and open the **app.py** file that contains the alexa skill written in python.
+    - `$ cd alexa-hackathon-runbook/samples/python/alexa-random-chuck-fact/src`
+- The provided example is a custom Alexa skill that give random Chuck Norris facts. At this point, we will spend some time to run through the well-documented code. This should give everyone an idea on how to write your own skill.
+  
 
-  1. Focus on the Cloud9 Terminal Window and follow the next steps:
-
-  2. Install dependencies
-
-     - `$ cd /home/ec2-user/environment/alexa-hackathon-runbook/samples/python/alexa-random-chuck-fact/src`
+  
+## How to Deploy the sample Alexa Skill
+  
+1. Focus on the Cloud9 Terminal Window and follow the next steps:
+  
+2. Install dependencies
+  
+   - `$ cd /home/ec2-user/environment/alexa-hackathon-runbook/samples/python/alexa-random-chuck-fact/src`
      - `$ pip-3.6 install -r requirements.txt -t .`
 
   3. Create an S3 bucket for deployment:
@@ -64,7 +88,7 @@
 
   5. Deploy the Application:
 
-     - `sam deploy --template-file packaged.yaml --stack-name alexa-random-chuck-fact --capabilities CAPABILITY_IAM`
+     - `sam deploy --template-file packaged.yaml --stack-name alexa-random-chuck-fact-py --capabilities CAPABILITY_IAM`
 
   6. Go to AWS Lambda Dashboard and look for the Function named **alexa-random-chuck-fact-***.
 
@@ -119,28 +143,48 @@
       ![](images/stop_utterances.png)
 
   19. Copy the Skill ID. We'll use this on the next steps.
-
+  
       ![](images/skillid.png)
-
+  
   20. Go back to AWS Lambda dashboard and select the Lambda function named: **alexa-random-chuck-fact-*** that was created when you did Step 5. Click "Add Trigger" on the Configuration page.
-
+  
       ![](images/lambda_trigger.png)
-
+  
   21. Select "Alexa Skill Kit" from the drop down of available lambda triggers.
-
+  
       ![](images/add_trigger_alexa_skills.png)
-
+  
   22. Provide the Alexa Skill ID that you have collected in Step 20. Then click Add.
-
+  
       ![](images/lambda_trigger_alexa_config.png)
-
+  
   23. Go back to the Alexa Developer Dashboard and click on the "Endpoint" option on the left panel. Provide the Lambda ARN that you have obtained in Step 7. Then Click "Save Endpoints"
-
+  
       ![](images/endpoints.png)
-
+  
   24. The Alexa Skill Checklist should look like this. 
-
+  
       ![](images/checklist.png)
-
+  
   25. You may now test your Alexa skill,
 
+## Tips
+
+* Whenever you change anything on your code, use **sam package** to package it and **sam deploy** deploy to AWS:
+  * `sam package --output-template-file packaged.yaml --s3-bucket ph-alexa-hackathon-<team name>`
+  * `sam deploy --template-file packaged.yaml --stack-name <stack_name> --capabilities CAPABILITY_IAM`
+* You can install any third party library. In python you can do this by adding an entry on **requirements.txt** file and running `pip-3.6 install -r requirements.txt -t .` within the **src** folder. Be sure to repackage and redeploy when you are doing this.
+* For faster testing, you can use can configure Lambda Test Events using the **Amazon Alexa** event templates.
+* Have multiple tabs open on your web browser for both AWS console and Alexa Developer console. Better yet, split tasks amongst each team member.
+* Use a good invocation name. The one that is easy to pronounce.
+
+
+
+## Resources
+
+* https://developer.amazon.com/en-US/alexa/alexa-skills-kit/learn
+* ASK SDK for python docs - https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/
+* ASK SDK for node.js docs - https://ask-sdk-for-nodejs.readthedocs.io/en/latest/
+* ASK SDK for java docs - https://github.com/alexa/alexa-skills-kit-sdk-for-java
+* AWS SAM - https://aws.amazon.com/serverless/sam/
+* AWS Cloud9 docs - https://docs.aws.amazon.com/cloud9/latest/user-guide/welcome.html
