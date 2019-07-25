@@ -27,7 +27,19 @@ def getChuckFact():
         print(e)
         raise e
 
-    
+def getChuckFactWithCategory(category):
+    """
+    This is a helper function that collects a random fact from chucknorris.io
+    with a specific category
+    """
+    try:
+        fact = requests.get("https://api.chucknorris.io/jokes/random?category=" + category)
+        return fact.json()['value']
+    except requests.RequestException as e:
+        print(e)
+        raise e
+
+
 class LaunchRequestHandler(AbstractRequestHandler):
     """
     This is the RequestHandler class that will handle your skill's LaunchRequest
@@ -78,9 +90,9 @@ class HelpIntentHandler(AbstractRequestHandler):
         return is_intent_name("AMAZON.HelpIntent")(handler_input)
         
     def handle(self, handler_input):
-        speech = "If you want more Chuck Norris facts. You can say Yes, 'Give "
-        speech += "me more!' or 'Another one'. If you want me to stop just say "
-        speech += "'Goodbye' or 'Stop'."
+        speech = "If you want more Chuck Norris facts. You can say Yes, 'A "
+        speech += "random fact' or 'A category fact'. If you want me to stop"
+        speech += "just say 'Goodbye' or 'Stop'."
         
         handler_input.response_builder.speak(speech).set_card(
             SimpleCard(speech)).set_should_end_session(False)
@@ -113,19 +125,18 @@ class StopIntentHandler(AbstractRequestHandler):
         return handler_input.response_builder.response
 
 
-
-class AnotherFactHandler(AbstractRequestHandler):
+class RandomFactHandler(AbstractRequestHandler):
     """
     This is a custom RequestHandler class that will handle 'AChuckFact' intent.
     You can create your own Intents using this RequestHandler sample.
     
-    Use: 'give me more' or 'yes' as an intent utterance for this RequestHandler.
+    Use: 'a random fact' as an intent utterance for this RequestHandler.
     """
     def can_handle(self, handler_input):
         return is_intent_name("AChuckFact")(handler_input)
         
     def handle(self, handler_input):
-        speech = "So you like Chuck Norris huh. Let me give you another one. "
+        speech = "So you like Chuck Norris. Let me give you a random fact."
         speech += getChuckFact()
         speech += ". Do you want more awesome Chuck facts?"
         
@@ -134,6 +145,32 @@ class AnotherFactHandler(AbstractRequestHandler):
         return handler_input.response_builder.response
 
 
+class RandomFactWithCategoryHandler(AbstractRequestHandler):
+    """
+    This is a custom RequestHandler class that will handle 'AChuckFactWithSlot' intent.
+    This demonstrates how to use slots to make more interactive dialogues with Alexa
+    
+    You can create your own Intents with Slots using this RequestHandler sample.
+    
+    Use: 'A {categories} fact' or as an intent utterance for this RequestHandler.
+    """
+    def can_handle(self, handler_input):
+        return is_intent_name("AChuckFactWithSlot")(handler_input)
+        
+    def handle(self, handler_input):
+        # The following two lines of code demonstrates how to collect the slots
+        slots = handler_input.request_envelope.request.intent.slots
+        category = slots['categories'].value
+        
+        speech = "So you like Chuck Norris. Let me give you a fact in "
+        speech += category + ". "
+        speech += getChuckFactWithCategory(category)
+        speech += ". Do you want more awesome Chuck facts?"
+        handler_input.response_builder.speak(speech).set_card(
+            SimpleCard(speech)).set_should_end_session(False)
+        return handler_input.response_builder.response
+        
+        
 class FallbackIntentHandler(AbstractRequestHandler):
     """
     This is the RequestHandler class that will handle utterances that do not
@@ -167,13 +204,7 @@ class CrashHandler(AbstractRequestHandler):
         return is_intent_name("Crash")(handler_input)
         
     def handle(self, handler_input):
-        speech = "So you like Chuck Norris huh. Let me give you another one. "
-        speech += getChuckFact()
-        speech += ". Do you want more awesome Chuck facts?"
-        
-        handler_input.response_builder.speak(speech).set_card(
-            SimpleCard(speech)).set_should_end_session(False)
-        return handler_input.response_builder.response
+        raise("Induce an exception")
         
 
 class AllExceptionHandler(AbstractExceptionHandler):
@@ -201,7 +232,8 @@ sb = SkillBuilder()
 sb.add_request_handler(LaunchRequestHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(StopIntentHandler())
-sb.add_request_handler(AnotherFactHandler())
+sb.add_request_handler(RandomFactHandler())
+sb.add_request_handler(RandomFactWithCategoryHandler())
 sb.add_request_handler(CrashHandler())
 sb.add_request_handler(FallbackIntentHandler())
 
