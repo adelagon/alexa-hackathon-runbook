@@ -1,4 +1,4 @@
-* # Welcome to Alexa Hackathon Runbook
+# Welcome to Alexa Hackathon Runbook
 
   
 
