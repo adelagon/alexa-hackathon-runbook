@@ -33,9 +33,9 @@
   * Each team is allowed to use any other AWS services such as DynamoDB. This will give you extra points.
   
   * You can use any other third party API's. PROTIP: see if there's any interesting API's to play with in https://rapidapi.com/
+
   
-  
-  
+
 ## Setting up your Environment
 
 - Once logged in to AWS console. Go to Cloud9 dashboard and create a new Environment with the following configuration. Make sure that you're in N.Virginia (us-east-1) region:
@@ -64,7 +64,7 @@
 ## How to write your own Alexa Skills
 
 - In Cloud9 IDE, go to python samples folder and open the **app.py** file that contains the alexa skill written in python.
-    
+  
     - `$ cd alexa-hackathon-runbook/samples/python/alexa-random-chuck-fact/src`
 - The provided example is a custom Alexa skill that give random Chuck Norris facts. At this point, we will spend some time to run through the well-documented code. This should give everyone an idea on how to write your own skill.
   
@@ -77,107 +77,107 @@
   - `$ cd /home/ec2-user/environment/alexa-hackathon-runbook/samples/python/alexa-random-chuck-fact/src`
   - `$ pip-3.6 install -r requirements.txt -t .`
   
-  3. Create an S3 bucket for deployment:
+2. Create an S3 bucket for deployment:
 
-     - `$ aws s3 mb s3://ph-alexa-hackathon-<team name>`
+   - `$ aws s3 mb s3://ph-alexa-hackathon-<team name>`
 
-  4. Create a lambda deployment package:
+3. Create a lambda deployment package:
 
-     - `$ sam package --output-template-file packaged.yaml --s3-bucket ph-alexa-hackathon-<team name>`
+   - `$ sam package --output-template-file packaged.yaml --s3-bucket ph-alexa-hackathon-<team name>`
 
-  5. Deploy the Application:
+4. Deploy the Application:
 
-     - `sam deploy --template-file packaged.yaml --stack-name alexa-random-chuck-fact-py --capabilities CAPABILITY_IAM`
+   - `sam deploy --template-file packaged.yaml --stack-name alexa-random-chuck-fact-py --capabilities CAPABILITY_IAM`
 
-  6. Go to AWS Lambda Dashboard and look for the Function named **alexa-random-chuck-fact-***.
+5. Go to AWS Lambda Dashboard and look for the Function named **alexa-random-chuck-fact-***.
 
-     ![](images/lambda_fn.png)
+   ![](images/lambda_fn.png)
 
-  7.  Copy the ARN of the Lambda function that was produced. This can be found on the Top Right corner of the Function detai page.
+6. Copy the ARN of the Lambda function that was produced. This can be found on the Top Right corner of the Function detai page.
 
-     ![images/lambda_arn.png](images/lambda_arn.png)
+   ![](images/lambda_arn.png)
 
-  8. Login to https://developer.amazon.com/alexa and create a new skill. Put any value to the skill name and select "Custom" on Choose a model option and "Provision your own" on Choose a method to host as seen below then click "Create Skill":
+7. Login to https://developer.amazon.com/alexa and create a new skill. Put any value to the skill name and select "Custom" on Choose a model option and "Provision your own" on Choose a method to host as seen below then click "Create Skill":
 
-     ![](images/create_skill.png)
+   ![](images/create_skill.png)
 
-  9. Choose "Start from Scratch" when choosing a template. Then click "Choose".
+8. Choose "Start from Scratch" when choosing a template. Then click "Choose".
 
-     ![](images/choose_template.png)
+   ![](images/choose_template.png)
 
-  10. On the right side panel of the Alexa Developer Console. Click "1. Invocation Name" to specify the utterance that will trigger the Alexa Skill.
+9. On the right side panel of the Alexa Developer Console. Click "1. Invocation Name" to specify the utterance that will trigger the Alexa Skill.
 
-      ![](images/invocation.png)
+   ![](images/invocation.png)
 
-  11. Enter the Skill Invocation Name. (ie. chuck norris). It could be any value. This will trigger the `LaunchRequestHandler`. Click "Save Model"
+10. Enter the Skill Invocation Name. (ie. chuck norris). It could be any value. This will trigger the `LaunchRequestHandler`. Click "Save Model"
 
-      ![](images/invocation_name.png)
+   ![](images/invocation_name.png)
 
-  12. Now let's Add our Custom Intents. On the Left Panel. Click the '+ Add' Button right beside Intents:
+11. Now let's Add our Custom Intents. On the Left Panel. Click the '+ Add' Button right beside Intents:
 
-      ![](images/add_intents.png)
+    ![](images/add_intents.png)
 
-  13. Type **AChuckFact** in Create custom intent. Then click "Create custom intent"
+12. Type **AChuckFact** in Create custom intent. Then click "Create custom intent"
 
-      ![](images/achuckfact.png)
+    ![](images/achuckfact.png)
 
-  14. Now add Sample Utterance as **'a random fact'**. This will trigger the skill to provide another fact which is implemented in the `RandomFactHandler`.
+13. Now add Sample Utterance as **'a random fact'**. This will trigger the skill to provide another fact which is implemented in the `RandomFactHandler`.
 
-      ![](images/achuckfact_utterances.png)
+    ![](images/achuckfact_utterances.png)
 
-  15. Now let's add  Slots. Click "+" beside the "Slot Types" on the left panel. Name the Custom slot type as **categories**. Then add two slot values: **science** and **music**.
+14. Now let's add  Slots. Click "+" beside the "Slot Types" on the left panel. Name the Custom slot type as **categories**. Then add two slot values: **science** and **music**.
 
-      ![](images/slots.png)
+    ![](images/slots.png)
 
-  15. Add another Custom Intent named **'AChuckFactWithSlot'** and use the Slots we have created in Step 14. The utterance should be **'a {categories} fact'**, using that kind of utterance links the Slots to this Custom Intent. This custom intent triggers the `RandomFactWithCategoryHandler`
+15. Add another Custom Intent named **'AChuckFactWithSlot'** and use the Slots we have created in Step 14. The utterance should be **'a {categories} fact'**, using that kind of utterance links the Slots to this Custom Intent. This custom intent triggers the `RandomFactWithCategoryHandler`
 
-      ![](images/slot_utterances.png)
+    ![](images/slot_utterances.png)
 
-  16. Add another Custom Intent named **'Crash'**.
+16. Add another Custom Intent named **'Crash'**.
 
-      ![](images/crash.png)
+    ![](images/crash.png)
 
-  17. Now add Sample Utterances like: 'crash'. This will trigger the skill to simulate a skill bug in the `CrashHandler` which will then trigger the `AllExceptionHandler`.
+17. Now add Sample Utterances like: 'crash'. This will trigger the skill to simulate a skill bug in the `CrashHandler` which will then trigger the `AllExceptionHandler`.
 
-      ![](images/crash_utterances.png)
+    ![](images/crash_utterances.png)
 
-  18. Now let's add the Utterances for the built-in AMAZON.HelpIntent. You can use 'help' and 'help me'. This will trigger the `HelpIntentHandler`
+18. Now let's add the Utterances for the built-in AMAZON.HelpIntent. You can use 'help' and 'help me'. This will trigger the `HelpIntentHandler`
 
-      ![](images/help_utterances.png)
+    ![](images/help_utterances.png)
 
-  19. Add the Utterances for the built-in AMAZON.StopIntent. You can use 'stop' and 'goodbye'. This will trigger the `StopIntentHandler` 
+19. Add the Utterances for the built-in AMAZON.StopIntent. You can use 'stop' and 'goodbye'. This will trigger the `StopIntentHandler` 
 
-      ![](images/stop_utterances.png)
+    ![](images/stop_utterances.png)
 
-  20. Copy the Skill ID. We'll use this on the next steps.
+20. Copy the Skill ID. We'll use this on the next steps.
 
-      ![](images/skillid.png)
+    ![](images/skillid.png)
 
-  21. Go back to AWS Lambda dashboard and select the Lambda function named: **alexa-random-chuck-fact-*** that was created when you did Step 5. Click "Add Trigger" on the Configuration page.
+21. Go back to AWS Lambda dashboard and select the Lambda function named: **alexa-random-chuck-fact-*** that was created when you did Step 5. Click "Add Trigger" on the Configuration page.
 
-      ![](images/lambda_trigger.png)
+    ![](images/lambda_trigger.png)
 
-  22. Select "Alexa Skill Kit" from the drop down of available lambda triggers.
+22. Select "Alexa Skill Kit" from the drop down of available lambda triggers.
 
-      ![](images/add_trigger_alexa_skills.png)
+    ![](images/add_trigger_alexa_skills.png)
 
-  23. Provide the Alexa Skill ID that you have collected in Step 20. Then click Add.
+23. Provide the Alexa Skill ID that you have collected in Step 20. Then click Add.
 
-      ![](images/lambda_trigger_alexa_config.png)
+    ![](images/lambda_trigger_alexa_config.png)
 
-  24. Go back to the Alexa Developer Dashboard and click on the "Endpoint" option on the left panel. Provide the Lambda ARN that you have obtained in Step 6 in the Default Region. Then Click "Save Endpoints"
+24. Go back to the Alexa Developer Dashboard and click on the "Endpoint" option on the left panel. Provide the Lambda ARN that you have obtained in Step 6 in the Default Region. Then Click "Save Endpoints"
 
-      ![](images/endpoints.png)
+    ![](images/endpoints.png)
 
-  25. The Alexa Skill Checklist should look like this. 
+25. The Alexa Skill Checklist should look like this. 
 
-      ![](images/checklist.png)
+    ![](images/checklist.png)
 
-  26. You may now test your Alexa skill. Try the following conversations:
+26. You may now test your Alexa skill. Try the following conversations:
 
-      * *"Alexa ask Chuck Norris a random fact"*
-      * *"Alexa ask Chuck Norris a music fact"*
-      * Try saying *"Crash"* or *"a science fact"* or *"help me"* or *"goodbye"* during your dialogue with Alexa
+    * *"Alexa ask Chuck Norris a random fact"*
+    * *"Alexa ask Chuck Norris a music fact"*
+    * Try saying *"Crash"* or *"a science fact"* or *"help me"* or *"goodbye"* during your dialogue with Alexa
 
 ## Tips
 
