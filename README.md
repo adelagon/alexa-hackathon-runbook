@@ -74,8 +74,8 @@
 
 1. Focus on the Cloud9 Terminal Window and follow the next steps. Install dependencies:
   
-  - `$ cd /home/ec2-user/environment/alexa-hackathon-runbook/samples/python/alexa-random-chuck-fact/src`
-  - `$ pip-3.6 install -r requirements.txt -t .`
+   - `$ cd /home/ec2-user/environment/alexa-hackathon-runbook/samples/python/alexa-random-chuck-fact/src`
+   - `$ pip-3.6 install -r requirements.txt -t .`
   
 2. Create an S3 bucket for deployment:
 
