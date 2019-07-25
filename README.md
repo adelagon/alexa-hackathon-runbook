@@ -186,6 +186,7 @@
   * `sam deploy --template-file packaged.yaml --stack-name <stack_name> --capabilities CAPABILITY_IAM`
 * You can install any third party library. In python you can do this by adding an entry on **requirements.txt** file and running `pip-3.6 install -r requirements.txt -t .` within the **src** folder. Be sure to repackage and redeploy when you are doing this.
 * For faster testing, you can use can configure Lambda Test Events using the **Amazon Alexa** event templates.
+* Use AWS Cloudwatch to see the lambda logs.
 * Have multiple tabs open on your web browser for both AWS console and Alexa Developer console. Better yet, split tasks amongst each team member.
 * Use a good invocation name. The one that is easy to pronounce.
 
