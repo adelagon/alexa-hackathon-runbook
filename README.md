@@ -32,7 +32,7 @@
   
   * Each team is allowed to use any other AWS services such as DynamoDB. This will give you extra points.
   
-  * You can use any other third party API's. PROTIP: see if there's any interesting API's to play with in https://rapidapi.com/
+  * You can use any other third party API's. **PROTIP:** see if there's any interesting API's to play with in https://rapidapi.com/
 
   
 
