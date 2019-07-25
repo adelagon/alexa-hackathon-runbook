@@ -201,3 +201,4 @@
 * ASK SDK for java docs - https://github.com/alexa/alexa-skills-kit-sdk-for-java
 * AWS SAM - https://aws.amazon.com/serverless/sam/
 * AWS Cloud9 docs - https://docs.aws.amazon.com/cloud9/latest/user-guide/welcome.html
+* Alexa Samples - https://github.com/alexa
